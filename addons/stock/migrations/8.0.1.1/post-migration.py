@@ -1032,11 +1032,13 @@ def populate_stock_move_fields(cr, registry):
         INNER join product_template pt on pp.product_tmpl_id = pt.id
         where pt.uom_id != sm2.product_uom""")
     sm_ids = [row[0] for row in cr.fetchall()]
-    qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
-    for id, qty in qty_vals.iteritems():
-        cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
-            qty, id))
-
+    try:
+        qty_vals = sm_obj._quantity_normalize(cr, uid, sm_ids, None, None)
+        for id, qty in qty_vals.iteritems():
+            cr.execute("UPDATE stock_move set product_qty = '%s' where id=%s" % (
+                qty, id))
+    except:
+        pass
     # If a stock move is Waiting availability ('confirmed'), but the source
     # location is 'supplier', 'inventory' or 'production', then set it as
     # Available ('assigned').

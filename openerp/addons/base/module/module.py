@@ -557,7 +557,7 @@ class module(osv.osv):
         for mod in todo:
             for dep in mod.dependencies_id:
                 if dep.state == 'unknown':
-                    raise orm.except_orm(_('Error'), _('You try to upgrade a module that depends on the module: %s.\nBut this module is not available in your system.') % (dep.name,))
+                    raise orm.except_orm(_('Error'), _('You try to upgrade a module %s that depends on the module: %s.\nBut this module is not available in your system. modules states %s and %s ') % (mod.name, dep.name, mod.state, dep.state))
                 if dep.state == 'uninstalled':
                     ids2 = self.search(cr, uid, [('name', '=', dep.name)])
                     to_install.extend(ids2)
