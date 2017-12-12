@@ -310,7 +310,7 @@ def reassign_uom_id(cr):
     cr.execute("""
         select ail.id, uo2.id from account_invoice_line ail
         left join product_template pt on (ail.product_id = pt.id)
-        left join product_uom uo1 on (ail.uos_id = uo1.id)
+        left join product_uom uo1 on (ail.uom_id = uo1.id)
         left join product_uom uo2 on (pt.uom_id = uo2.id)
         left join product_category pc1 on (uo1.category_id = pc1.id)
         left join product_category pc2 on (uo2.category_id = pc2.id)
@@ -344,4 +344,4 @@ def migrate(env, version):
     blacklist_field_recomputation(env)
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
-    reassign_uom_id(cr)
+    # reassign_uom_id(cr)
