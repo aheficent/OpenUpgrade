@@ -319,7 +319,6 @@ def merge_supplier_invoice_refs(env):
             AND supplier_invoice_number IS NOT NULL"""
     )
 
-
 def set_date_maturity(env):
     openupgrade.logged_query(
         env.cr, """
@@ -327,6 +326,24 @@ def set_date_maturity(env):
         SET date_maturity = date
         WHERE date_maturity IS NULL"""
     )
+
+
+def reassign_uom_id(cr):
+    cr.execute("""
+        select ail.id, uo2.id from account_invoice_line ail
+        left join product_template pt on (ail.product_id = pt.id)
+        left join product_uom uo1 on (ail.uos_id = uo1.id)
+        left join product_uom uo2 on (pt.uom_id = uo2.id)
+        left join product_category pc1 on (uo1.category_id = pc1.id)
+        left join product_category pc2 on (uo2.category_id = pc2.id)
+        where pc1.id != pc2.id
+    """)
+
+    for ail_id, uom_id in cr.fetchall():
+        cr.execute("""
+            UPDATE account_invoice_line set uom_id = %s
+            where id = %s
+        """ % (uom_id, ail_id))
 
 
 @openupgrade.migrate(use_env=True)
@@ -351,3 +368,4 @@ def migrate(env, version):
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
     set_date_maturity(env)
+    reassign_uom_id(cr)
