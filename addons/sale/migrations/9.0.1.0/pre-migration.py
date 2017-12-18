@@ -59,25 +59,6 @@ def map_order_state(cr):
         WHERE sol.order_id = so.id""")
 
 
-def reassign_uom_id(cr):
-    cr.execute("""
-        select ail.id, uo1.id from account_invoice_line ail
-        inner join sale_order_line_invoice_rel rel on (rel.invoice_id = ail.id)
-        inner join sale_order_line sol on (rel.order_line_id = sol.id)
-        left join product_uom uo1 on (ail.uom_id = uo1.id)
-        left join product_uom uo2 on (sol.product_uom = uo2.id)
-        left join product_category pc1 on (uo1.category_id = pc1.id)
-        left join product_category pc2 on (uo2.category_id = pc2.id)
-        where pc1.id != pc2.id
-    """)
-
-    for ail_id, uom_id in cr.fetchall():
-        cr.execute("""
-            UPDATE sale_order_line set product_uom = %s
-            where id = %s
-        """ % (uom_id, ail_id))
-
-
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -86,4 +67,3 @@ def migrate(env, version):
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
-    reassign_uom_id(cr)
