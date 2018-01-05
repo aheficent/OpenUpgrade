@@ -188,6 +188,7 @@ def cleanup_modules(cr):
             # ('stock_dropshipping_dual_invoice', 'stock_dropshipping'),
             # ('stock_picking_reorder_lines', 'stock_picking_line_sequence'),
             ('portal_project_issue', 'project'),
+            ('crm_claim_rma', 'rma'),
         ], merge_modules=True,
     )
 
