@@ -51,7 +51,7 @@ field_renames = [
     ('account.invoice', 'account_invoice', 'tax_line', 'tax_line_ids'),
     ('account.invoice.line', 'account_invoice_line', 'invoice_line_tax_id',
      'invoice_line_tax_ids'),
-    ('account.invoice.line', 'account_invoice_line', 'uos_id', 'uom_id'),
+    # ('account.invoice.line', 'account_invoice_line', 'uos_id', 'uom_id'),
     ('account.journal', 'account_journal', 'currency', 'currency_id'),
     ('account.move.line', 'account_move_line', 'analytic_lines',
      'analytic_line_ids'),
