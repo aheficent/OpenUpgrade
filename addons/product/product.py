@@ -115,6 +115,8 @@ class product_uom(osv.osv):
         return self._compute_qty_obj(cr, uid, from_unit, qty, to_unit, round=round, rounding_method=rounding_method)
 
     def _compute_qty_obj(self, cr, uid, from_unit, qty, to_unit, round=True, rounding_method='UP', context=None):
+        if not to_unit or not from_unit:
+            return qty
         if context is None:
             context = {}
         if from_unit.category_id.id != to_unit.category_id.id:
