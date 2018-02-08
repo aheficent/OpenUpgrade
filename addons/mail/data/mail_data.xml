@@ -57,11 +57,11 @@
             <field name="notify_email">none</field>
         </record>
 
-        <!-- Catchall Email Alias TODO-->
-        <!--<record id="icp_mail_catchall_alias" model="ir.config_parameter">-->
-            <!--<field name="key">mail.catchall.alias</field>-->
-            <!--<field name="value">catchall</field>-->
-        <!--</record>-->
+        <!-- Catchall Email Alias -->
+        <record id="icp_mail_catchall_alias" model="ir.config_parameter">
+            <field name="key">mail.catchall.alias</field>
+            <field name="value">catchall</field>
+        </record>
 
         <!-- Discussion subtype for messaging / Chatter -->
         <record id="mt_comment" model="mail.message.subtype">
