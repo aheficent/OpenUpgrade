@@ -128,9 +128,14 @@ def create_stock_picking_fields(cr):
     """ This function reduce creation time of the stock_picking fields
     """
     logger.info("Fast creation of the field stock_picking.priority")
-    cr.execute("""
-        ALTER TABLE stock_picking
-        ADD COLUMN "priority" VARCHAR DEFAULT '1'""")
+    cr.execute("""SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name='stock_picking' AND
+    column_name='priority'""")
+    if not cr.fetchone():
+        cr.execute("""
+            ALTER TABLE stock_picking
+            ADD COLUMN "priority" VARCHAR DEFAULT '1'""")
     # This request do the same as stock_picking.get_min_max_date but faster
     openupgrade.logged_query(cr, """
         UPDATE stock_picking sp set priority = res.priority
