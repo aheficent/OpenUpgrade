@@ -11,7 +11,7 @@ renamed_modules = {
     # OCA/sale-workflow
     # OCA/partner-contact
     'partner_external_maps': 'partner_external_map',
-
+    'account_check_writing': 'account_check_printing',
     # OCA/server-tools
     # OCA/runbot-addons
     'runbot_secure': 'runbot_relative',
