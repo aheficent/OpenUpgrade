@@ -240,10 +240,12 @@ def migrate_stock_picking(cr, registry):
     cr.execute("UPDATE stock_picking SET state = %s WHERE state = %s",
                ('waiting', 'auto',))
     # Add a column for referring stock moves in stock pack operation
-    cr.execute("""
-        ALTER TABLE stock_pack_operation
-        ADD COLUMN %s INTEGER
-        """ % openupgrade.get_legacy_name('move_id'))
+    if not openupgrade.column_exists(
+            cr, 'stock_pack_operation', openupgrade.get_legacy_name('move_id')):
+        cr.execute("""
+            ALTER TABLE stock_pack_operation
+            ADD COLUMN %s INTEGER
+            """ % openupgrade.get_legacy_name('move_id'))
     # Recreate stock.pack.operation (only for moves that belongs to a picking)
     openupgrade.logged_query(
         cr,
