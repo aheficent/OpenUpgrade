@@ -34,6 +34,16 @@ def copy_user_id(cr):
         """)
 
 
+def copy_dates(cr):
+    openupgrade.logged_query(cr, """
+        UPDATE project_project p
+        SET (date, date_start) = (a.%s, a.%s)
+        FROM account_analytic_account a
+        WHERE a.id = p.analytic_account_id
+        """ % openupgrade.get_legacy_name('date'),
+                             openupgrade.get_legacy_name('date_start'))
+
+
 @openupgrade.migrate()
 def migrate(cr, version):
     map_priority(cr)
@@ -46,3 +56,4 @@ def migrate(cr, version):
     openupgrade.load_data(
         cr, 'project', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
+    copy_dates(cr)

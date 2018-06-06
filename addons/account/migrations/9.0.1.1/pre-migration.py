@@ -103,6 +103,10 @@ column_copies = {
     ],
     'account_invoice': [
         ('reference', None, None),
+    ],
+    'account_analytic_account': [
+        ('date', None, None),
+        ('date_start', None, None),
     ]
 }
 
