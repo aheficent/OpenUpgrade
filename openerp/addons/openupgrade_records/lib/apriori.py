@@ -56,7 +56,7 @@ renamed_modules = {
     'website_sale_collapse_categories': 'website_sale',
     'website_event_register_free': 'website_event',
     'website_event_register_free_with_sale': 'website_event_sale',
-    'account_payment_sale_stock': 'account_payment_sale',
+    # 'account_payment_sale_stock': 'account_payment_sale',
     # 'sale_order_line_dates': 'sale_order_line_date',
     # 'sale_documents_comments': 'sale_comment_propagation',
 }
