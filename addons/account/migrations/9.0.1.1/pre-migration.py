@@ -105,8 +105,8 @@ column_copies = {
         ('reference', None, None),
     ],
     'account_analytic_account': [
+        ('date_start_bk', None, None),
         ('date', None, None),
-        ('date_start', None, None),
     ]
 }
 

@@ -40,8 +40,8 @@ def copy_dates(cr):
         SET (date, date_start) = (a.%s, a.%s)
         FROM account_analytic_account a
         WHERE a.id = p.analytic_account_id
-        """ % openupgrade.get_legacy_name('date'),
-                             openupgrade.get_legacy_name('date_start'))
+        """ % (openupgrade.get_legacy_name('date'),
+               openupgrade.get_legacy_name('date_start_bk')))
 
 
 @openupgrade.migrate()
