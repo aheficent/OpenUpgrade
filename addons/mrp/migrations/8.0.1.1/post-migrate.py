@@ -105,30 +105,15 @@ def fix_domains(cr, pool):
 
 
 def update_stock_moves(env):
-    stock_move_obj = env['stock.move']
-    mrp_production_obj = env['mrp.production']
-    ir_property_obj = env['ir.property']
-    # find all locations that are used as production location
-    locations = [
-        ir_property_obj.get_by_record(p)
-        for p in ir_property_obj.search(
-            [('name', '=', 'property_stock_production')])]
-    location_ids = list(set(x.id for x in locations if x))
-    for move in stock_move_obj.search(
-            [('location_dest_id', 'in', location_ids)]):
-        productions = mrp_production_obj.search([
-            '|',
-            # don't rely on many2manys with domain ignoring it on search
-            ('move_lines', '=', move.id),
-            ('move_lines2', '=', move.id),
-        ])
-        if len(productions) == 1:
-            env.cr.execute(
-                'UPDATE stock_move SET raw_material_production_id=%s '
-                'WHERE id=%s', (productions.id, move.id))
-        else:
-            logger.warning("Couldn't find unique production order for %s "
-                           "(candidates are %s)", move.id, productions.ids)
+    # WITH THE OCA CODE I WAS NOT FINDING ANY MO
+    sql = """
+        UPDATE stock_move sm1 set raw_material_production_id = 
+        (SELECT mpm.production_id FROM mrp_production_move_ids mpm
+        INNER JOIN stock_move sm2 ON sm2.id = mpm.move_id
+        INNER JOIN stock_location sl ON sm2.location_dest_id = sl.id 
+         WHERE mpm.move_id = sm1.id AND sl.id = 7)
+    """
+    openupgrade.logged_query(env.cr, sql)
 
 
 def update_stock_picking_name(cr, pool):
