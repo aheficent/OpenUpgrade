@@ -142,3 +142,33 @@ def migrate(env, version):
     openupgrade.load_data(
         env.cr, 'base', 'migrations/10.0.1.3/noupdate_changes.xml'
     )
+    """Rename XML-IDs for not duplicating states as now Odoo core has
+    integrated them.
+    """
+
+    XMLID_RENAMES = [
+        ("l10n_ca_toponyms.ON", 'base.ON'),
+        ("l10n_ca_toponyms.QC", "base.QC"),
+        ("l10n_ca_toponyms.AB", "base.AB"),
+        ("l10n_ca_toponyms.NS", "base.NS"),
+        ("l10n_ca_toponyms.NB", "base.NB"),
+        ("l10n_ca_toponyms.MB", "base.MB"),
+        ("l10n_ca_toponyms.BC", "base.BC"),
+        ("l10n_ca_toponyms.PE", "base.PE"),
+        ("l10n_ca_toponyms.SK", "base.SK"),
+        ("l10n_ca_toponyms.NL", "base.NL"),
+        ("l10n_ca_toponyms.NT", "base.NT"),
+        ("l10n_ca_toponyms.YT", "base.YT"),
+        ("l10n_ca_toponyms.NU", "base.NU"),
+        ("usa_localization.state_us_100", "base.state_us_100"),
+        ("usa_localization.state_us_101", "base.state_us_101"),
+        ("usa_localization.state_us_102", "base.state_us_102"),
+        ("usa_localization.state_us_103", "base.state_us_103"),
+        ("usa_localization.state_us_104", "base.state_us_104"),
+        ("usa_localization.state_us_105", "base.state_us_105"),
+    ]
+
+    # for old_xml_id, new_xml_id in XMLID_RENAMES:
+    #     # Delete first records created by base module
+    #     env.ref(new_xml_id).unlink()
+    openupgrade.rename_xmlids(env.cr, XMLID_RENAMES)

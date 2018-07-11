@@ -26,6 +26,7 @@ def migrate(env, version):
         """DELETE FROM hr_attendance
         WHERE action != 'sign_in'"""
     )
-    openupgrade.rename_fields(env, _field_renames)
+    if not openupgrade.column_exists(env.cr, 'hr_attendance', 'check_in'):
+        openupgrade.rename_fields(env, _field_renames)
     env.ref('hr_attendance.property_rule_attendace_manager').unlink()
     env.ref('hr_attendance.property_rule_attendace_employee').unlink()
