@@ -374,4 +374,4 @@ def migrate(env, version):
     merge_supplier_invoice_refs(env)
     openupgrade.rename_fields(env, field_renames)
     set_date_maturity(env)
-    reassign_uom_id(cr)
+    # reassign_uom_id(cr)
