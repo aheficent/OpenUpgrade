@@ -29,4 +29,5 @@ def assign_check_out(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    assign_check_out(env)
+    pass
+    # assign_check_out(env)
