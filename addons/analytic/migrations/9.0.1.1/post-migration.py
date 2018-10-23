@@ -69,4 +69,4 @@ def set_analytic_account_visibility(cr):
 def migrate(cr, version):
     set_partner_id(cr)
     create_tags(cr)
-    set_analytic_account_visibility(cr)
+    # set_analytic_account_visibility(cr)
