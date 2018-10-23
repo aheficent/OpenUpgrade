@@ -44,8 +44,29 @@ def copy_dates(cr):
                openupgrade.get_legacy_name('date_start_bk')))
 
 
-@openupgrade.migrate()
-def migrate(cr, version):
+def create_project_for_account(env):
+    """Create a project for an already existing analytic account."""
+    env.cr.execute("""
+    SELECT aa.id, aa.complete_wbs_name, aa.complete_wbs_code
+    FROM account_analytic_account aa
+    LEFT JOIN project_project pp ON pp.analytic_account_id = aa.id
+    WHERE pp.analytic_account_id is null;
+    """)
+    acc_ids = env.cr.fetchall()
+    acc_model = env['account.analytic.account']
+    project_model = env['project.project']
+    accs = acc_model.browse([x[0] for x in acc_ids])
+    for this in accs:
+        project_model.create({
+            'name': this.name,
+            'analytic_account_id': this.id,
+            'account_class': u'project',
+        })
+
+
+@openupgrade.migrate(use_env=True)
+def migrate(env, version):
+    cr = env.cr
     map_priority(cr)
     map_template_state(cr)
     copy_user_id(cr)
@@ -57,3 +78,4 @@ def migrate(cr, version):
         cr, 'project', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
     copy_dates(cr)
+    create_project_for_account(env)
