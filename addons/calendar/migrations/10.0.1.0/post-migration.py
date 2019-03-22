@@ -7,6 +7,7 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
-    openupgrade.load_data(
-        cr, 'calendar', 'migrations/10.0.1.0/noupdate_changes.xml',
-    )
+    pass
+    # openupgrade.load_data(
+    #     cr, 'calendar', 'migrations/10.0.1.0/noupdate_changes.xml',
+    # )

@@ -7,5 +7,5 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
-
-    env.ref('project_issue.portal_issue_rule').unlink()
+    pass
+    # env.ref('project_issue.portal_issue_rule').unlink()

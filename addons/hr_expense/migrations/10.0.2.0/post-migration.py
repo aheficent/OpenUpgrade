@@ -100,5 +100,5 @@ def migrate(env, version):
     sheets = Sheet.search([])
     env.add_todo(Sheet._fields['total_amount'], sheets)
     Sheet.recompute()
-    openupgrade.load_data(
-        cr, 'hr_expense', 'migrations/10.0.2.0/noupdate_changes.xml')
+    # openupgrade.load_data(
+    #     cr, 'hr_expense', 'migrations/10.0.2.0/noupdate_changes.xml')

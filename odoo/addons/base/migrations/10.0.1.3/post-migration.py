@@ -138,7 +138,7 @@ def merge_country_states(env):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     handle_im_odoo_support_views(env)
-    merge_country_states(env)
+    # merge_country_states(env)
     openupgrade.load_data(
         env.cr, 'base', 'migrations/10.0.1.3/noupdate_changes.xml'
     )

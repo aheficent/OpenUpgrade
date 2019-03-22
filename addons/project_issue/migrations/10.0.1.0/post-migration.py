@@ -7,6 +7,7 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
-    openupgrade.load_data(
-        cr, 'project_issue', 'migrations/10.0.1.0/noupdate_changes.xml',
-    )
+    pass
+    # openupgrade.load_data(
+    #     cr, 'project_issue', 'migrations/10.0.1.0/noupdate_changes.xml',
+    # )

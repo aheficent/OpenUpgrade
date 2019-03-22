@@ -8,6 +8,6 @@ from openupgradelib import openupgrade
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
 
-    env.ref('project.portal_project_rule').unlink()
-    env.ref('project.portal_task_rule').unlink()
+    # env.ref('project.portal_project_rule').unlink()
+    # env.ref('project.portal_task_rule').unlink()
     env.ref('project.action_client_project_menu').unlink()
