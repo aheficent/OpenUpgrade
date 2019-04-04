@@ -164,6 +164,25 @@ def migrate_account_invoice_shipping_address(env):
     ])
 
 
+def force_fields_to_recompute(cr):
+    cr.execute("""SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name='sale_order_line' AND
+    column_name='qty_to_invoice'""")
+    if cr.fetchone():
+        cr.execute("""
+            alter table sale_order_line drop column qty_to_invoice cascade;
+        """)
+    cr.execute("""SELECT column_name
+    FROM information_schema.columns
+    WHERE table_name='sale_order_line' AND
+    column_name='qty_invoiced'""")
+    if cr.fetchone():
+        cr.execute("""
+            alter table sale_order_line drop column qty_invoiced cascade;
+        """)
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     migrate_sale_layout(env)
@@ -172,3 +191,4 @@ def migrate(env, version):
     warning_update_module_names_partial(env.cr)
     sale_expense_update_module_names_partial(env.cr)
     migrate_account_invoice_shipping_address(env)
+    force_fields_to_recompute(envcr)
