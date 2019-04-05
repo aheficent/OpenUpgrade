@@ -191,4 +191,4 @@ def migrate(env, version):
     warning_update_module_names_partial(env.cr)
     sale_expense_update_module_names_partial(env.cr)
     migrate_account_invoice_shipping_address(env)
-    force_fields_to_recompute(envcr)
+    force_fields_to_recompute(env.cr)
