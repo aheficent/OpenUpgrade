@@ -423,10 +423,12 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         location_ids = (
             location_obj.search(
                 cr, uid, [('usage', '=', usage),
-                          ('company_id', '=', warehouse.company_id.id)]) or
+                          ('company_id', '=', warehouse.company_id.id)],
+                order='id asc', limit=1) or
             location_obj.search(
                 cr, uid, [('usage', '=', usage),
-                          ('company_id', '=', False)]))
+                          ('company_id', '=', False)],
+                order='id asc', limit=1))
         return location_ids[0]
 
     customer_loc_id = get_location_by_usage('customer')
